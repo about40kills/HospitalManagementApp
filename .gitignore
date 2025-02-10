@@ -52,3 +52,4 @@ Thumbs.db
 # Optional: depending on your build tool
 .next
 .nuxt.env
+.env
