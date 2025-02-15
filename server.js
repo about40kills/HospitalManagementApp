@@ -10,7 +10,7 @@ dotenv = require('dotenv').config();
 //initialize express
 const app = express();
 
-
+app.set('view engine', 'ejs')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +28,12 @@ app.get("/", (req, res) => {
     })
 })
 
+app.get("/home", (req, res) => {
+    res.render("index")
+})
+
 app.listen(PORT, async() => {
     await sequelize.sync({ force: true });
     console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:3000/home`);
 })
