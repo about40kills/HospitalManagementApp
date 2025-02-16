@@ -1,6 +1,5 @@
 const { DataTypes } = require(`sequelize`);
 const { sequelize } = require(`../config/db`);
-const { model } = require("mongoose");
 
 // Define the Inventory model
 const Inventory = sequelize.define(`Inventory`, {
@@ -28,4 +27,4 @@ const Inventory = sequelize.define(`Inventory`, {
     },
 }, {timestamps: true});
 
-model.exports = Inventory;
+model.exports = {Inventory};

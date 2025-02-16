@@ -37,7 +37,7 @@ const createPatient = asyncHandler(async (req, res) => {
 //routes GET /api/patients/:id
 //api private access
 const getPatientById = asyncHandler(async (req, res) => {
-    const patient = await Patient.findBy(req.params.id);
+    const patient = await Patient.findByPk(req.params.id);
     if(patient) {
         res.status(200).json(patient);
     } else {
@@ -52,14 +52,14 @@ const getPatientById = asyncHandler(async (req, res) => {
 //api private access
 //get the patient first
 const updatePatient = asyncHandler(async (req, res) => {
-    const patient = await Patient.findBy(req.params.id);
+    const patient = await Patient.findByPk(req.params.id);
     if(!patient) {
         res.status(404).json({message: `Patient not found`});
         throw new Error(`Patient not found`);
     }
 
-    //user only gets to update a patient if they are an admin
-    if(req.user.role !== 'admin') {
+    //user only gets to update a patient if they are an admin,doctor or staff
+    if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
         res.status(401).json({message: `Not authorized to update a patient`});
         throw new Error(`Not authorized to update a patient`);
     }
@@ -82,8 +82,8 @@ const deletePatient = asyncHandler(async (req, res) => {
         throw new Error(`Patient not found`);
     }
 
-    //user only gets to delete a patient if they are an admin
-    if(req.user.role !== 'admin') {
+    //user only gets to delete a patient if they are an admin,doctor or staff
+    if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
         res.status(401).json({message: `Not authorized to update a patient`});
         throw new Error(`Not authorized to update a patient`);
     }
@@ -91,3 +91,5 @@ const deletePatient = asyncHandler(async (req, res) => {
     res.status(200).json(patient)
     res.status(200).json({message: `Patient deleted`});
 });
+
+module.exports = {getPatients, createPatient, getPatientById, updatePatient, deletePatient};

@@ -25,7 +25,7 @@ const LabReport = sequelize.define(`LabReport`, {
         type: DataTypes.ENUM(`Pending`, `Completed`, `Reviewed`),
         defaultValue: `Pending`,
         allowNull: false,
-    }
+    },
 }, {timestamps: true});
 
 
