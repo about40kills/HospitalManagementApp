@@ -12,7 +12,6 @@ const app = express();
 
 app.set('view engine', 'ejs')
 app.use(cors());
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to sequelize
@@ -33,7 +32,7 @@ app.get("/home", (req, res) => {
 })
 
 app.listen(PORT, async() => {
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: true });
     console.log(`Server running on port ${PORT}`);
     console.log(`Server running on http://localhost:3000/home`);
 })
