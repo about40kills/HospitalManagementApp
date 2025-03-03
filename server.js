@@ -11,9 +11,11 @@ dotenv = require('dotenv').config();
 //initialize express
 const app = express();
 
+// app.use("/ipfs", require("./src/routes/ipfs"))
 app.set('view engine', 'ejs')
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+
 
 // Connect to sequelize
 connectDB();
