@@ -35,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     //check if user already exists
-    const userAvailable = await User.findOne({email});
+    const userAvailable = await User.findOne({ where: { email } });
     if(userAvailable) {
         return res.status(400).json({message: `User already exists`});
     }
@@ -50,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role
+            role,
         });
             return res.status(201).json({_id: user.id, username:user.username, email: user.email, role: user.role});
     } catch (error) {
@@ -67,7 +67,7 @@ const loginUser = asyncHandler(async (req, res) => {
         return res.status(400).json({message: `All fields are mandatory!`});
     }
     //check for a user
-    const user = await User.findOne({email});
+    const user = await User.findOne({ where: { email } });
     //compare password with hashed password
     if( user && (await bcrypt.compare(password, user.password))) {
         const accessToken = jwt.sign({

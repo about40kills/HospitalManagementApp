@@ -1,5 +1,6 @@
 const express = require('express');
 const { sequelize, connectDB } = require('./src/config/db');
+const errorHandler = require('./src/middleware/errorHandler');
 
 //define a port
 PORT = process.env.PORT || 3000,
@@ -22,17 +23,12 @@ app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {
-    res.json({
-        message: "Welcome to the Hospital API"
-    })
-})
-
-app.get("/home", (req, res) => {
-    res.render("index")
-})
+    return res.send("Welcome to the Hospital API");
+});
+app.use(`/api/users`,require('./src/routes/userRoutes'));
+app.use(errorHandler);
 
 app.listen(PORT, async() => {
     await sequelize.sync({ alter: true });
     console.log(`Server running on port ${PORT}`);
-    console.log(`Server running on http://localhost:3000/home`);
 })

@@ -25,6 +25,10 @@ const Inventory = sequelize.define(`Inventory`, {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    status: {
+        type: DataTypes.ENUM('in-stock', 'low-stock', 'out-of-stock'),
+        defaultValue: 'in-stock'
+    }
 }, {timestamps: true});
 
 model.exports = {Inventory};

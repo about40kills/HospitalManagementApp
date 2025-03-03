@@ -119,13 +119,27 @@ const updateInventoryStatus = asyncHandler(async(req, res) => {
         if(!item) {
             return res.status(404).json({message: `Item not found`});
         }
-        const { status } = req.body;
-        if(!status) {
-            return res.status(400).json({message: `Status is mandatory`});
+        const { status } = req.body; 
+        const {id } = req.params; 
+        if(item.quantity <= 0) { 
+            return res.status(400).json({message: `Item is out of stock`});
         }
         item.status = status;
+
+        await Inventory.update({
+            inventoryId: id,
+            previousStatus: item.status,
+            newStatus: status,
+            updatedBy: req.user.id,
+            updateDate: new Date()
+        });
+
         await item.save();
-        return res.status(200).json(item);
+        return res.status(200).json({
+            success: true,
+            data: item,
+            message: `Status updated to ${status}`
+        })
     } catch (error) {
         return res.status(500).json({message: `Server error`});
     }
