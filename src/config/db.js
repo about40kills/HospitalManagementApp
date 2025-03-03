@@ -21,6 +21,7 @@ const connectDB = async () => {
          console.log(`Database sync complete`);
     } catch (err) {
         console.error(`Database inactive`, err);
+        process.exit(1);
     }
 }
 

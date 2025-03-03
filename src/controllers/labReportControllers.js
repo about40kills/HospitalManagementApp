@@ -8,13 +8,15 @@ const getLabReports = asyncHandler(async (req, res) => {
 
      //user only gets to get a lab report if they are an admin,doctor or staff
      if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
-        res.status(401).json({message: `Not authorized to update a patient`});
-        throw new Error(`Not authorized to update a patient`);
+        return res.status(401).json({message: `Not authorized to update a patient`});
     }
+    try{
 
     const reports = await LabReport.findAll( { include: ['patient', 'doctor' ]});
-    res.status(200).json(reports);
-
+    return res.status(200).json(reports);
+    } catch (error) {
+        return res.status(500).json({message: `Error fetching lab reports`});
+    }
 });
 
 //create a lab report
@@ -23,16 +25,20 @@ const getLabReports = asyncHandler(async (req, res) => {
 const createLabReport = asyncHandler(async (req, res) => {
     const { patientId, doctorId, reportType, result } = req.body;
     if(!patientId || !doctorId || !reportType || !result) {
-        res.status(400).json({message: `All fields are mandatory!`});
-        throw new Error(`All fields are mandatory!`);
+         return res.status(400).json({message: `All fields are mandatory!`});
     } // else create a folder for the patient
-    const labReport = await LabReport.create({
-        patientId,
-        doctorId,
-        reportType,
-        result,
-    });
-    res.status(201).json(labReport);
+    try{
+        const labReport = await LabReport.create({
+            patientId,
+            doctorId,
+            reportType,
+            result,
+        });
+        return res.status(201).json(labReport);
+    } catch (error) {
+        return res.status(500).json({message: `Server error`});
+    }
+
 });
 
 //get a specific lab report by patient id
@@ -42,16 +48,14 @@ const getLabReportById = asyncHandler(async (req, res) => {
 
     //user only gets to get a lab report if they are an admin,doctor or staff
     if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
-        res.status(401).json({message: `Not authorized to update a patient`});
-        throw new Error(`Not authorized to update a patient`);
+        return res.status(401).json({message: `Not authorized to update a patient`});
     }
 
     const report = await LabReport.findByPk(req.params.id, { include: ['patient', 'doctor' ]});
     if(report) {
-        res.status(200).json(report);
+        return res.status(200).json(report);
     } else {
-        res.status(404).json({message: `Lab Report not found`});
-        throw new Error(`Lab Report not found`);
+        return res.status(404).json({message: `Lab Report not found`});
     }
 });
 
@@ -62,14 +66,12 @@ const getLabReportById = asyncHandler(async (req, res) => {
 const updateLabReport = asyncHandler(async (req, res) => {
     const report = await LabReport.findByPk(req.params.id);
     if(!report) {
-        res.status(404).json({message: `Lab Report not found`});
-        throw new Error(`Lab Report not found`);
+        return res.status(404).json({message: `Lab Report not found`});
     }
 
     //user only gets to update a lab report if they are an admin,doctor or staff
     if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
-        res.status(401).json({message: `Not authorized to update a lab report`});
-        throw new Error(`Not authorized to update a lab report`);
+        return res.status(401).json({message: `Not authorized to update a lab report`});
     }
 
     //update the lab report
@@ -78,7 +80,7 @@ const updateLabReport = asyncHandler(async (req, res) => {
         req.params.id,
         { new: true }
     );
-    res.status(200).json(updateReport);
+    return res.status(200).json(updateReport);
 });
 
 //delete a lab report
@@ -87,18 +89,16 @@ const updateLabReport = asyncHandler(async (req, res) => {
 const deleteLabReport = asyncHandler(async (req, res) => {
     const report = await LabReport.findByPk(req.params.id);
     if(!report) {
-        res.status(404).json({message: `Lab Report not found`});
-        throw new Error(`Lab Report not found`);
+        return res.status(404).json({message: `Lab Report not found`});
     }
 
     //user only gets to delete a lab report if they are an admin,doctor or staff
     if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
-        res.status(401).json({message: `Not authorized to delete a lab report`});
-        throw new Error(`Not authorized to delete a lab report`);
+        return res.status(401).json({message: `Not authorized to delete a lab report`});
     }
 
     await LabReport.deleteOne({_id: req.params.id});
-    res.status(200).json(report)
+    return res.status(200).json(report)
 });
 
 //update a lab report status
@@ -108,14 +108,13 @@ const deleteLabReport = asyncHandler(async (req, res) => {
 const updateLabReportStatus = asyncHandler(async (req, res) => {
     const report = await LabReport.findByPk(req.params.id);
     if(!report) {
-        res.status(404).json({message: `Lab Report not found`});
-        throw new Error(`Lab Report not found`);
+        return res.status(404).json({message: `Lab Report not found`});
     }
 
     //user only gets to update a lab report if they are an admin,doctor or staff
     if(req.user.role !== 'admin' && req.user.role !== 'doctor' && req.user.role !== 'staff') {
-        res.status(401).json({message: `Not authorized to update a lab report`});
-        throw new Error(`Not authorized to update a lab report`);
+        return res.status(401).json({message: `Not authorized to update a lab report`});
+
     }
 
     //update the lab report status
@@ -124,31 +123,28 @@ const updateLabReportStatus = asyncHandler(async (req, res) => {
             { status },
             { where: { id: req.params.id } }
         ); 
-        res.status(200).json(updateReport);
+        return res.status(200).json(updateReport);
 });
 
 
 //request a lab test
-//routes POST /api/labreports/:id/request
+//routes GET /api/labreports/:id/request
 //api private access
 const requestLabTest = asyncHandler(async (req, res) => {
     const report = await LabReport.findByPk(req.params.id);
     if(!report) {
-        res.status(404).json({message: `Lab Report not found`});
-        throw new Error(`Lab Report not found`);
+        return res.status(404).json({message: `Lab Report not found`});
     }
 
     //user only gets to request a lab test if they are a doctor
     if(req.user.role !== 'doctor') {
-        res.status(401).json({message: `Not authorized to request a lab test`});
-        throw new Error(`Not authorized to request a lab test`);
+        return res.status(401).json({message: `Not authorized to request a lab test`});
     }
 
     //request the lab test
     const { testType, notes } = req.body;
     if (!testType) {
-        res.status(400).json({ message: 'Test type is required' });
-        throw new Error('Test type is required');
+        return res.status(400).json({ message: 'Test type is required' });
     }
      // Add the test request to the report
     report.testRequests = report.testRequests || [];
@@ -160,5 +156,7 @@ const requestLabTest = asyncHandler(async (req, res) => {
     });
 
     await report.save();
-    res.status(200).json({ message: 'Lab test requested successfully', report });
+    return res.status(200).json({ message: 'Lab test requested successfully', report });
 });
+
+module.exports = { getLabReports, createLabReport, getLabReportById, updateLabReport, deleteLabReport, updateLabReportStatus, requestLabTest };
