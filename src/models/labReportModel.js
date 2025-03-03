@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const { Patient } = require('./patientModel');
+const  Patient  = require('./patientModel');
 
 const LabReport = sequelize.define(`LabReport`, {
     // Model attributes are defined here
@@ -29,6 +29,6 @@ const LabReport = sequelize.define(`LabReport`, {
 }, {timestamps: true});
 
 
-LabReport.belongsTo(Patient, { foreignKey: 'patientId', onDelete: 'CASCADE' });
+LabReport.belongsTo( Patient, { foreignKey: 'patientId', onDelete: 'CASCADE' }); 
 
 module.exports = LabReport;

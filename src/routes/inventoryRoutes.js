@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require('../middleware/validateToken');
+const validateToken = require('../middleware/validateTokenMiddleware');
 
 const {  getAllInventory, createInventory, getInventoryById, updateInventory, deleteInventory, updateInventoryStatus } = require('../controllers/inventoryControllers');
 router.use(validateToken);
@@ -22,3 +22,5 @@ router.route('/:id').delete(deleteInventory);
 
 //update an inventory item status
 router.route('/:id/status').put(updateInventoryStatus);
+
+module.exports = router;

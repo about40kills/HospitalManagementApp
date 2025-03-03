@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const e = require('express');
+const express = require('express');
 
 // Define the Patient model
 const Patient = sequelize.define(`Patient`, {
@@ -19,7 +19,7 @@ const Patient = sequelize.define(`Patient`, {
         allowNull: false,
     },
     dateOfBirth: {
-        type: DateTypes.DATE,
+        type: DataTypes.DATE,
         allowNull: false,
     },
     gender: {

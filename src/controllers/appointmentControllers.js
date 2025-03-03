@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
-const { Appointment, Doctor, Patient } = require('../models');
+const Patient = require('../models/patientModel');
+const Appointment = require(`../models/appointmentModel`);
 
 //     Create new appointment
 //    POST /api/appointments

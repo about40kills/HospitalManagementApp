@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require('../middleware/validateToken');
+const validateToken = require('../middleware/validateTokenMiddleware');
 
 const {  getAppointments, createAppointment, getAppointmentById, updateAppointment, deleteAppointment, getDoctorAppointments, getPatientAppointments } = require('../controllers/appointmentControllers');
 router.use(validateToken);

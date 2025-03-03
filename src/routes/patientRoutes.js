@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require('../middleware/validateToken');
+const validateToken = require('../middleware/validateTokenMiddleware');
 
 const { getPatients, createPatient, getPatientById, updatePatient, deletePatient } = require('../controllers/patientControllers');
 router.use(validateToken);

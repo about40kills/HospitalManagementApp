@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const validateToken = require('../middleware/validateToken');
+const validateToken = require('../middleware/validateTokenMiddleware');
 
 const { getLabReports, createLabReport, getLabReportById, updateLabReport, deleteLabReport, updateLabReportStatus, requestLabTest } = require('../controllers/labReportControllers');
 router.use(validateToken);
@@ -25,3 +25,5 @@ router.route('/:id/status').put(updateLabReportStatus);
 
 // Request a lab test
 router.route('/:id/request').put(requestLabTest);
+
+module.exports = router;
