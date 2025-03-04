@@ -1,11 +1,11 @@
 const express = require('express');
+const bodyParser = require("body-parser")
 const { sequelize, connectDB } = require('./src/config/db');
 const errorHandler = require('./src/middleware/errorHandler');
 
 //define a port
-PORT = process.env.PORT || 3000,
-
-cors = require('cors'),
+PORT = process.env.PORT || 3000
+const cors = require('cors')
 dotenv = require('dotenv').config();
 
 //initialize express
@@ -18,11 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Connect to sequelize
-connectDB();
+connectDB().catch(err => {
+    console.error('Unable to connect to the database:', err);
+    process.exit(1);
+});
 
 //middleware
 app.use(express.json());
-
+app.use(bodyParser.json())
 // Routes
 app.get("/", (req, res) => {
     return res.send("Welcome to the Hospital API");

@@ -8,6 +8,7 @@ const User = require("../models/userModel");
 //api public access
 const registerUser = asyncHandler(async (req, res) => {
     const { username, email, password,role } = req.body;
+    console.log('Request body:', req.body); // Log the request body
     if(!username || !email || !password || !role) {
         return res.status(400).json({message: `All fields are mandatory!`});
     }
