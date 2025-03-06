@@ -7,6 +7,9 @@ const Patient = require('../models/patientModel');
 const getPatients = asyncHandler(async (req, res) => {
     try{
         const patients = await Patient.findAll();
+        if(!patients) {
+            return res.status(404).json({message: `No patients found`});
+        }
          return res.status(200).json(patients);
     }
     catch(error) {
