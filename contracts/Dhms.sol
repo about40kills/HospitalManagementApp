@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0
+pragma solidity ^0.8.0;
 
 contract HMS{
     struct Record {
@@ -8,8 +8,7 @@ contract HMS{
 
     mapping(string => Record) public records;
 
-    function storeRecord(string memory patientid, string memory ipfsHash)
-    public {
+    function storeRecord(string memory patientid, string memory ipfsHash) public {
         records[patientid] = Record(patientid, ipfsHash);
     }
 
