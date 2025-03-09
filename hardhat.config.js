@@ -6,6 +6,6 @@ module.exports = {
   networks: { 
     ganache: {
       url: "http://127.0.0.1:8545",
-      mnemonic: "gesture awake million century busy silver pelican govern casino cable horror bar"
+      mnemonic: "just hip guard goose illegal shine poem item insane farm wing damage"
 }}
 };

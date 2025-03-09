@@ -1,4 +1,4 @@
-// spdx-license-identifier: MIT
+// SPDX-license-identifier: MIT
 pragma solidity ^0.8.0;
 
 import "./accessControl.sol";
@@ -28,7 +28,7 @@ contract PatientRecords {
     }
 
     function registerPatient(string memory _fname, string memory _lname, string memory medicalHistory) public {
-        patients[msg.sender] = Patient(_fname, _lanem, _medicalHistory, msg.sender);
+        patients[msg.sender] = Patient(_fname, _lname, medicalHistory, msg.sender);
     }
 
     function updateMedicalHistory(string memory _newHistory) public onlyOwner(msg.sender){
