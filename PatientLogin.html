@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="./output.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .login-form {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #D6E5C4;
+        }
+        .login-form h2 {
+            margin-bottom: 20px;
+        }
+        .login-form form {
+            width: 100%;
+            max-width: 300px;
+        }
+        .login-form label {
+            display: block;
+            margin-top: 10px;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .links a {
+            text-decoration: none;
+            color: blue;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            background: blue;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .background-image {
+            width: 50%;
+            background: url('Loginbg.jpg') no-repeat center center/cover;
+        }
+        .logo{
+            background-color:#D6E5C4 ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="login-form">
+            <h2>Login As A Patient</h2>
+            <form>
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+                
+                <div class="links">
+                    <a href="#">Login as Admin</a>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                
+                <button type="submit">Login</button>
+            </form><br>
+            <p>Do you have an account? <a href="#PatientDashboard">Sign up</a></p>
+        </div>
+        <div class="background-image"></div>
+    </div>
+</body>
+</html>
