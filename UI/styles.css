@@ -1,0 +1,442 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #d7ccc8; /* Beige background for the entire page, matching the wireframe */
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+}
+
+.nav-links li a:hover {
+    color: #2e7d32;
+}
+
+/* Hero Section Styles */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(to right, #e8f5e9 50%, #ffffff 50%);
+    min-height: 70vh;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.hero-content h1 {
+    color: #2e7d32;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-content button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.hero-content button:hover {
+    background-color: #1b5e20;
+}
+
+.learn-more {
+    display: block;
+    margin-top: 1rem;
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.learn-more:hover {
+    text-decoration: underline;
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Priority Section Styles */
+.priority-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 2rem;
+    background-color: #ffffff; /* White background for contrast, matching the image */
+}
+
+.priority-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.priority-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Optional: Add rounded corners if desired, matching the image */
+}
+
+.priority-content {
+    flex: 1;
+    padding-left: 2rem;
+    position: relative; /* Ensure proper positioning for the bubble */
+}
+
+.priority-content::before {
+    content: " "; /* Ensure content is present (using a space to guarantee rendering) */
+    position: absolute;
+    top: 0;
+    left: -20px; /* Adjust to position the bubble slightly to the left, overlapping with the image */
+    width: 300px; /* Width of the bubble, adjust as needed to match the image */
+    height: 200px; /* Height of the bubble, adjust as needed to match the image */
+    background: #4caf50; /* Green background for the bubble */
+    border-radius: 50% 20px; /* Create a bubble shape with a rounded top-left corner, matching the image */
+    z-index: -1; /* Place the bubble behind the text */
+    /* Debugging aids: Add multiple visual indicators (we’ll revisit later) */
+    border: 2px solid yellow; /* Temporary yellow border to confirm visibility (remove later) */
+    outline: 2px solid red; /* Temporary red outline to confirm positioning (remove later) */
+}
+
+.priority-content h2, .priority-content p, .priority-content button {
+    position: relative; /* Ensure text stays above the bubble */
+    z-index: 1; /* Keep text in front of the bubble */
+    color: #333; /* Default text color, can be adjusted to white if needed */
+}
+
+.priority-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.priority-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.priority-content button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.priority-content button:hover {
+    background-color: #1b5e20;
+}
+
+/* Services Section Styles */
+.services-section {
+    padding: 4rem 2rem;
+    background-color: #d7ccc8; /* Beige background, matching the image */
+    text-align: center;
+}
+
+.services-section h2 {
+    color: #2e7d32; /* Green title, matching the image */
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.service-card {
+    background-color: #ffffff; /* White background for cards, matching the image */
+    border-radius: 20px; /* Rounded corners, matching the image */
+    padding: 2rem;
+    width: 200px; /* Fixed width for consistency, adjust as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    text-align: center;
+}
+
+.service-card img {
+    width: 50px; /* Size of icons, adjust as needed */
+    height: 50px;
+    margin-bottom: 1rem;
+}
+
+.service-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333; /* Black text for titles, matching the image */
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: #666; /* Gray text for descriptions, matching the image */
+    line-height: 1.4;
+}
+
+/* Testimonials Section Styles */
+.testimonials-section {
+    padding: 4rem 2rem;
+    background-color: #e8f5e9; /* Light green background, matching the image */
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    color: #2e7d32; /* Green title, matching the image */
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.testimonials-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.testimonial-card {
+    background-color: #ffffff; /* White background for cards, matching the image */
+    border-radius: 50%; /* Circular/oval shape for cards, matching the image */
+    padding: 2rem;
+    width: 200px; /* Fixed width for consistency, adjust as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    text-align: center;
+}
+
+.testimonial-card img {
+    width: 100px; /* Size of profile images, adjust as needed */
+    height: 100px;
+    border-radius: 50%; /* Circular shape for images, matching the image */
+    margin-bottom: 1rem;
+    object-fit: cover; /* Ensure images fill the circle without distortion */
+}
+
+.testimonial-card p {
+    font-size: 1rem;
+    color: #333; /* Black text for quotes, matching the image */
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-card span {
+    font-size: 0.9rem;
+    color: #666; /* Gray text for names, matching the image */
+    display: block;
+}
+
+/* Appointment Section Styles */
+.appointment-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 2rem;
+    background-color: #d7ccc8; /* Beige background, matching the image */
+}
+
+.appointment-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.appointment-bubble {
+    background: #4caf50; /* Green background for the bubble */
+    border-radius: 50%; /* Circular shape for the bubble, matching the image */
+    padding: 2rem;
+    width: 300px; /* Width of the bubble, adjust as needed */
+    height: 200px; /* Height of the bubble, adjust as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000; /* Black text, matching the image */
+    text-align: center;
+}
+
+.appointment-bubble h2 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.appointment-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.appointment-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Footer Styles */
+.footer {
+    padding: 2rem;
+    background-color: #d7ccc8; /* Beige background, matching the image */
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem; /* Reduced gap to bring columns closer together */
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-column h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+}
+
+.footer-column ul li a:hover {
+    color: #2e7d32;
+}
+
+.social-media {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.social-media a {
+    font-size: 2rem;
+    color: #333;
+}
+
+.social-media a:hover {
+    /* Updated hover colors for social media icons */
+    color: #0077b5; /* LinkedIn blue */
+}
+
+.social-media .fa-youtube:hover {
+    color: #ff0000; /* YouTube red */
+}
+
+.social-media .fa-facebook:hover {
+    color: #1877f2; /* Facebook blue */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero, .priority-section, .services-section, .testimonials-section, .appointment-section, .footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .hero-content, .hero-image, .priority-content, .priority-image, .appointment-content, .appointment-image {
+        width: 100%;
+    }
+
+    .hero-image, .priority-image, .appointment-image {
+        margin-top: 2rem;
+    }
+
+    .priority-content {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .priority-content::before {
+        display: none; /* Hide the bubble on mobile for simplicity (we’ll revisit later) */
+    }
+
+    .services-container, .testimonials-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card, .testimonial-card {
+        width: 80%; /* Full width on mobile, adjust as needed */
+        margin-bottom: 1rem;
+    }
+
+    .appointment-bubble {
+        width: 80%; /* Full width on mobile, adjust as needed */
+        height: auto; /* Adjust height for mobile */
+        border-radius: 20px; /* Simplify to a rounded rectangle on mobile */
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-column {
+        margin-bottom: 2rem;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: right;
+    }
+}

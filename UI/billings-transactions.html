@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Billings Transactions</title>
+    <link rel="stylesheet" href="patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Billings</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search Here" class="search-input">
+                <i class="fas fa-search search-icon"></i>
+                <select class="filter-dropdown">
+                    <option value="all">All</option>
+                    <option value="paid">Paid</option>
+                    <option value="unpaid">Unpaid</option>
+                    <option value="overdue">Overdue</option>
+                </select>
+            </div>
+            <div class="user-profile">
+                <img src="images/doctor-prakesh.jpg" alt="Dr. Prakesh Shamar" class="doctor-img-small">
+                <span>Dr. Prakesh Shamar, Admin</span>
+            </div>
+        </header>
+
+        <section class="billings-transactions-section">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Paid Transaction</h3>
+                    <p class="amount">$2,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Unpaid Transaction</h3>
+                    <p class="amount">$1,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Transaction Overdue</h3>
+                    <p class="amount">$5,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+            </div>
+
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status pending">Pending</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <button class="pagination-btn">Prev</button>
+                <span>1 2 … 6 7</span>
+                <button class="pagination-btn">Next</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

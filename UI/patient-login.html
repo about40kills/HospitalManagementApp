@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Login As a Patient</title>
+    <link rel="stylesheet" href="patient-login.css">
+    <!-- Add Font Awesome for potential future icons (optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">SmartCare</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact">Contact Us</a></li>
+            <li><a href="login-selection.html">Login</a></li>
+            <li><a href="signup-selection.html">Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <section class="login-section">
+        <div class="login-container">
+            <h2>Login As a Patient</h2>
+            <form id="patient-login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Ruweida">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="********">
+                </div>
+                <button type="submit">LOGIN</button>
+                <div class="login-links">
+                    <a href="admin-login.html">Login as an Admin</a> | <a href="forgot-password.html">Forgot Password?</a>
+                </div>
+                <p>Do not have an Account? <a href="signup.html">Sign up</a></p>
+            </form>
+        </div>
+        <div class="login-image">
+            <img src="images/patient-login-illustration.jpg" alt="Medical professionals">
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="index.html#contact">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="#terms">Terms and Conditions</a></li>
+                <li><a href="#privacy">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Contact Us</h3>
+            <ul>
+                <li>+23343553045</li>
+                <li>contact@gmail.com</li>
+            </ul>
+        </div>
+        <div class="social-media">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+    </footer>
+</body>
+</html>
