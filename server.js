@@ -29,7 +29,10 @@ app.use(express.json());
 app.use(bodyParser.json())
 // Routes
 app.get("/", (req, res) => {
-    return res.send("Welcome to the Hospital API");
+    return res.render("login");
+});
+app.get("/signup", (req, res) => {
+    return res.render("signUp");
 });
 app.use(`/api/users`,require('./src/routes/userRoutes'));
 app.use(`/api/patients`,require('./src/routes/patientRoutes'));
