@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Inventory Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background-color: #2e7d32;
+            color: #fff;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-links {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-links a {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #fff;
+        }
+
+        .sidebar-links a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-circle {
+            padding: 0.5rem 1rem;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: #2e7d32;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Action Button Styles */
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        .action-btn.secondary {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .action-btn.secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            padding: 0.5rem;
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+        }
+
+        .search-bar button {
+            background-color: transparent;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .table-header h2 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        table th {
+            font-weight: bold;
+            color: #666;
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+
+        .status-tag.in-stock {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-tag.low-stock {
+            background-color: #fff8e1;
+            color: #ff8f00;
+        }
+
+        .status-tag.out-of-stock {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .table-actions button {
+            background-color: transparent;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0.2rem;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .table-actions button:hover {
+            background-color: #f5f5f5;
+            color: #2e7d32;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .pagination-info {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            padding: 0.5rem 1rem;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        .pagination-btn.active {
+            background-color: #2e7d32;
+            color: white;
+            border: 1px solid #2e7d32;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 60%;
+            max-width: 700px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-header h3 {
+            color: #2e7d32;
+            font-size: 1.3rem;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cancel-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .save-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .save-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modal-content {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow-x: hidden;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                padding: 1rem 0.5rem;
+            }
+
+            .sidebar-links a span {
+                display: none;
+            }
+
+            .sidebar-links a i {
+                margin-right: 0;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .action-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+            <li><a href="/profile"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+            <li><a href="/appointments"><i class="fas fa-calendar-check"></i> <span>Appointments</span></a></li>
+            <li><a href="/doctors"><i class="fas fa-user-md"></i> <span>Doctors</span></a></li>
+            <li><a href="/medical-records"><i class="fas fa-file-medical"></i> <span>Medical Records</span></a></li>
+            <li><a href="/lab-reports"><i class="fas fa-flask"></i> <span>Lab Reports</span></a></li>
+            <li><a href="/inventory" class="active"><i class="fas fa-boxes"></i> <span>Inventory</span></a></li>
+            <li><a href="/billing"><i class="fas fa-file-invoice-dollar"></i> <span>Billing</span></a></li>
+            <li><a href="/settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+            <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Inventory Management</h1>
+            <div class="user-profile">
+                <span class="user-circle"><%= user ? user.username : 'Admin' %>, <%= user ? user.role : 'Admin' %></span>
+            </div>
+        </header>
+
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-pills card-icon"></i>
+                </div>
+                <div class="card-value">1,254</div>
+                <div class="card-label">Total Items</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle card-icon" style="color: #ff8f00;"></i>
+                </div>
+                <div class="card-value">43</div>
+                <div class="card-label">Low Stock Items</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-ban card-icon" style="color: #c62828;"></i>
+                </div>
+                <div class="card-value">12</div>
+                <div class="card-label">Out of Stock</div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-truck card-icon" style="color: #1565c0;"></i>
+                </div>
+                <div class="card-value">7</div>
+                <div class="card-label">Pending Orders</div>
+            </div>
+        </div>
+
+        <div class="action-row">
+            <div class="action-buttons">
+                <button class="action-btn" id="addItemBtn"><i class="fas fa-plus"></i> Add New Item</button>
+                <button class="action-btn secondary"><i class="fas fa-file-export"></i> Export</button>
+                <button class="action-btn secondary"><i class="fas fa-print"></i> Print</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search items...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <h2>Inventory Items</h2>
+                <div class="table-filters">
+                    <select class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="medications">Medications</option>
+                        <option value="supplies">Medical Supplies</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="in-stock">In Stock</option>
+                        <option value="low-stock">Low Stock</option>
+                        <option value="out-of-stock">Out of Stock</option>
+                    </select>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    const inventoryItems = [
+                        { id: 'MED001', name: 'Paracetamol 500mg', category: 'Medications', quantity: 1500, unit: 'Tablets', status: 'in-stock', lastUpdated: '2025-03-20' },
+                        { id: 'MED002', name: 'Amoxicillin 250mg', category: 'Medications', quantity: 850, unit: 'Capsules', status: 'in-stock', lastUpdated: '2025-03-18' },
+                        { id: 'MED003', name: 'Ibuprofen 400mg', category: 'Medications', quantity: 320, unit: 'Tablets', status: 'low-stock', lastUpdated: '2025-03-15' },
+                        { id: 'SUP001', name: 'Surgical Gloves (M)', category: 'Supplies', quantity: 2500, unit: 'Pieces', status: 'in-stock', lastUpdated: '2025-03-19' },
+                        { id: 'SUP002', name: 'Face Masks N95', category: 'Supplies', quantity: 150, unit: 'Pieces', status: 'low-stock', lastUpdated: '2025-03-17' },
+                        { id: 'SUP003', name: 'Syringes 5ml', category: 'Supplies', quantity: 0, unit: 'Pieces', status: 'out-of-stock', lastUpdated: '2025-03-10' },
+                        { id: 'EQP001', name: 'Blood Pressure Monitor', category: 'Equipment', quantity: 12, unit: 'Units', status: 'in-stock', lastUpdated: '2025-03-05' },
+                        { id: 'EQP002', name: 'Glucometer', category: 'Equipment', quantity: 5, unit: 'Units', status: 'low-stock', lastUpdated: '2025-03-12' },
+                        { id: 'MED004', name: 'Diazepam 5mg', category: 'Medications', quantity: 0, unit: 'Tablets', status: 'out-of-stock', lastUpdated: '2025-03-08' },
+                        { id: 'SUP004', name: 'IV Cannula', category: 'Supplies', quantity: 450, unit: 'Pieces', status: 'in-stock', lastUpdated: '2025-03-14' }
+                    ];
+                    
+                    inventoryItems.forEach(item => {
+                    %>
+                    <tr>
+                        <td><%= item.id %></td>
+                        <td><%= item.name %></td>
+                        <td><%= item.category %></td>
+                        <td><%= item.quantity %></td>
+                        <td><%= item.unit %></td>
+                        <td>
+                            <span class="status-tag <%= item.status %>">
+                                <%= item.status === 'in-stock' ? 'In Stock' : item.status === 'low-stock' ? 'Low Stock' : 'Out of Stock' %>
+                            </span>
+                        </td>
+                        <td><%= new Date(item.lastUpdated).toLocaleDateString() %></td>
+                        <td class="table-actions">
+                            <button title="Edit"><i class="fas fa-edit"></i></button>
+                            <button title="View Details"><i class="fas fa-eye"></i></button>
+                            <button title="Stock Update"><i class="fas fa-plus-circle"></i></button>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <div class="pagination-info">Showing 1 to 10 of 150 entries</div>
+                <div class="pagination-controls">
+                    <button class="pagination-btn">Previous</button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Inventory Item</h3>
+                <span class="close">&times;</span>
+            </div>
+            
+            <form id="addItemForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" name="itemName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Medications">Medications</option>
+                            <option value="Supplies">Medical Supplies</option>
+                            <option value="Equipment">Equipment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unit">Unit</label>
+                        <select id="unit" name="unit" required>
+                            <option value="">Select Unit</option>
+                            <option value="Tablets">Tablets</option>
+                            <option value="Capsules">Capsules</option>
+                            <option value="Bottles">Bottles</option>
+                            <option value="Vials">Vials</option>
+                            <option value="Pieces">Pieces</option>
+                            <option value="Units">Units</option>
+                            <option value="Boxes">Boxes</option>
+                            <option value="Pairs">Pairs</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="manufacturer">Manufacturer</label>
+                        <input type="text" id="manufacturer" name="manufacturer">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="supplier">Supplier</label>
+                        <input type="text" id="supplier" name="supplier">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="batchNumber">Batch Number</label>
+                        <input type="text" id="batchNumber" name="batchNumber">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="date" id="expiryDate" name="expiryDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reorderLevel">Reorder Level</label>
+                        <input type="number" id="reorderLevel" name="reorderLevel" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Storage Location</label>
+                        <input type="text" id="location" name="location">
+                    </div>
+                    
+                    <div class="form-group full">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="save-btn">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal elements
+        const modal = document.getElementById("addItemModal");
+        const addBtn = document.getElementById("addItemBtn");
+        const closeBtn = document.querySelector(".close");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const addItemForm = document.getElementById("addItemForm");
+
+        // Open the modal when Add New Item button is clicked
+        addBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Close the modal when X or Cancel button is clicked
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        cancelBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Handle form submission
+        addItemForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            // In a real application, you would send this data to the server
+            const formData = new FormData(addItemForm);
+            
+            // Convert FormData to a regular object
+            const formDataObj = {};
+            formData.forEach((value, key) => {
+                formDataObj[key] = value;
+            });
+            
+            // For now, just log the data that would be sent
+            console.log("Item data to be sent:", formDataObj);
+            
+            // You would typically make an API call here
+            /*
+            fetch('/api/inventory/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formDataObj)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // Refresh the page or update the UI
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            */
+            
+            // Close the modal
+            modal.style.display = "none";
+            
+            // For demo purposes, show a success message
+            alert("Item added successfully!");
+        });
+    </script>
+</body>
+</html>
