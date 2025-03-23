@@ -224,53 +224,72 @@ button:hover {
     </style>
 </head>
 <body>
+    
     <nav>
         <div class="logo">SmartCare</div>
     </nav>
 <section class="signup-section">
     <div class="signup-container">
         <h2> Welcome To SmartCare</h2>
-        <form id="signup-form">
-            <h3>Credentials</h3>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Username">
+        <!-- Add this code at the top of your form in signUp.ejs -->
+        <form id="signup-form" action="/signup" method="POST">
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <div class="alert alert-danger">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error %></li>
+                    <% }); %>
+                </ul>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="someone@gmail.com">
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required placeholder="+233 0343435343">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="********">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="role-patient" name="role" value="patient">
-                        <label for="role-patient">Patient</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="role-doctor" name="role" value="doctor">
-                        <label for="role-doctor">Doctor</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="role-admin" name="role" value="admin">
-                        <label for="role-admin">Admin</label>
-                    </div>
+        <% } %>
+
+        <!-- Rest of your form fields -->
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" 
+                    value="<%= typeof formData !== 'undefined' ? formData.username : '' %>" 
+                    placeholder="Enter username">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" 
+                    value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" 
+                    placeholder="Enter email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password">
+        </div>
+
+
+        <!-- Role selection radio buttons -->
+        <div class="form-group">
+            <label>Role</label>
+            <div class="radio-group">
+                <div class="radio-option">
+                    <input type="radio" id="role-patient" name="role" value="patient"
+                            <%= (typeof formData !== 'undefined' && formData.role === 'patient') ? 'checked' : '' %>>
+                    <label for="role-patient">Patient</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="role-doctor" name="role" value="doctor"
+                            <%= (typeof formData !== 'undefined' && formData.role === 'doctor') ? 'checked' : '' %>>
+                    <label for="role-doctor">Doctor</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="role-admin" name="role" value="admin"
+                            <%= (typeof formData !== 'undefined' && formData.role === 'admin') ? 'checked' : '' %>>
+                    <label for="role-admin">Admin</label>
                 </div>
             </div>
+        </div>
 
-            
-            <button type="submit">SIGNUP</button>
-            <div class="signup-links">
-                <p>Already have an Account? <a href="/">Login</a></p>
-            </div>
+        <button type="submit">Sign Up</button>
+        <div class="signup-links">
+            <p>Already have an Account? <a href="/">Login</a></p>
+        </div>
         </form>
     </div>
     <div class="signup-image">

@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Patient Dashboard</title>
+    <link rel="stylesheet" href="patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="simple-calendar.css">
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5dc; /* Beige background */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    padding: 1rem 0; /* Adjusted padding to align content properly */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50; /* Green for SmartCare */
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure left alignment */
+    padding-left: 1rem; /* Add padding to align with navigation links */
+}
+
+.sidebar-links {
+    list-style: none;
+}
+
+.sidebar-links li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Consistent padding for alignment */
+    border-radius: 5px;
+}
+
+.sidebar-links a i {
+    margin-right: 0.5rem;
+    color: #4caf50;
+}
+
+.sidebar-links a:hover, .sidebar-links a.active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width for alignment */
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #ffffff; /* White background for header on all pages */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-circle {
+    background-color: #e0e0e0; /* Light gray circle */
+    color: #666;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Circular shape */
+    font-size: 0.9rem;
+}
+
+.doctor-img-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+/* Search Bar Styles (for Doctors page) */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    font-size: 0.9rem;
+}
+
+.search-icon {
+    color: #666;
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Dashboard Section Styles */
+.dashboard-section {
+    display: block;
+    margin-top: 1rem;
+}
+
+/* Welcome Section Styles */
+.welcome-section {
+    background: linear-gradient(to right, rgba(76, 175, 80, 0.8) 0%, rgba(76, 175, 80, 0.4) 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.welcome-section h2 {
+    font-size: 1.2rem;
+}
+
+.welcome-section button {
+    background-color: #ffffff;
+    color: #4caf50;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section button:hover {
+    background-color: #e8f5e9;
+}
+
+/* Top Row Styles */
+.top-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* Vitals Container Styles */
+.vitals-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex: 1;
+    min-width: 0;
+    max-width: 66%;
+}
+
+/* Vital Card Styles */
+.vital-card {
+    background-color: #ffffff;
+    border-radius: 8px; /* Rectangular cards with rounded corners */
+    padding: 1rem;
+    width: 180px; /* Fixed width for rectangular shape */
+    height: 120px; /* Fixed height for rectangular shape */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* For positioning progress and text */
+    background: linear-gradient(to bottom, #ffffff, #f5f5f5); /* Subtle gradient for depth */
+    border: 1px solid #e0e0e0; /* Light border for a clean look */
+}
+
+.vital-card i {
+    font-size: 1.5rem;
+    color: #4caf50; /* Green icon color */
+    margin-bottom: 0.5rem;
+}
+
+.vital-card h3 {
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.vital-card p {
+    color: #666;
+    font-size: 1.1rem; /* Slightly larger for emphasis */
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.vital-card .progress {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #ffffff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Specific progress colors for each vital */
+.vital-card:nth-child(1) .progress { /* Heart Rate */
+    background: conic-gradient(#4caf50 0% 70%, #e0e0e0 70% 100%); /* Green for 70% */
+}
+
+.vital-card:nth-child(2) .progress { /* Weight */
+    background: conic-gradient(#9c27b0 0% 50%, #e0e0e0 50% 100%); /* Purple for 50% */
+}
+
+.vital-card:nth-child(3) .progress { /* Overall Health */
+    background: conic-gradient(#2196f3 0% 80%, #e0e0e0 80% 100%); /* Blue for 80% */
+}
+
+.vital-card span {
+    color: #666;
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
+/* Calendar CSS */
+.calendar-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .calendar-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .month-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    margin: 0;
+  }
+  
+  .nav-button {
+    background: none;
+    border: none;
+    color: #9e9e9e;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+  }
+  
+  .nav-button:hover {
+    color: #616161;
+  }
+  
+  .weekday-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .weekday {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: #757575;
+    padding: 4px 0;
+  }
+  
+  .calendar-weeks {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .week-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+  
+  .day {
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .day:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .day.highlighted {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .day.appointment {
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+  }
+  
+  .day.empty {
+    background-color: transparent;
+    cursor: default;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .calendar-container {
+      max-width: 100%;
+    }
+    
+    .day {
+      height: 28px;
+      width: 28px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .calendar-container {
+      padding: 12px;
+    }
+    
+    .day {
+      height: 24px;
+      width: 24px;
+      font-size: 11px;
+    }
+    
+    .weekday {
+      font-size: 11px;
+    }
+  }
+
+/* Content Grid Styles */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    max-width: 100%;
+}
+
+/* Doctors Section Styles (for Doctors page) */
+.doctors-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.doctors-section h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid for doctor cards */
+    gap: 1rem;
+    padding: 1rem 0;
+}
+
+.doctor-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.doctor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.doctor-card h3 {
+    color: #333;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.doctor-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+}
+
+.status {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #ffffff; /* White background for status */
+    color: #333; /* Black text for visibility */
+}
+
+.status.paid {
+    color: #4caf50; /* Green text for "Paid" */
+}
+
+.status.pending {
+    color: #f57c00; /* Orange text for "Pending" */
+}
+
+.status.unavailable {
+    color: #d32f2f; /* Red text for "Unavailable" */
+}
+
+.doctor-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.action-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    background-color: #45a049;
+}
+
+.action-btn.small {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+.action-btn.modal-btn {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.action-btn.secondary {
+    background-color: #ffffff;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.action-btn.secondary:hover {
+    background-color: #e8f5e9;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.pagination-btn {
+    background-color: #ffffff;
+    color: #4caf50;
+    padding: 0.4rem 1rem;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn:hover {
+    background-color: #e8f5e9;
+}
+
+/* Appointments and Medications Container Styles */
+.appointments-medications {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 300px;
+}
+
+/* Appointments Section Styles */
+.appointments-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.appointments-section h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.appointment-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.appointment-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+}
+
+.appointment-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.appointment-info p {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.appointment-info span {
+    color: #666;
+    font-size: 0.8rem;
+    display: block;
+}
+
+/* Rescheduled Section */
+.rescheduled-section {
+    background-color: #fff3e0; /* Light orange for rescheduled */
+}
+
+/* Medications Section Styles */
+.medications-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+.medications-section h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.medication-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.medication-card p {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Doctor Profile Section Styles */
+.doctor-profile-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.doctor-header {
+    background-color: #4caf50; /* Green background for header */
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.doctor-img-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-info h2 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.doctor-info p {
+    font-size: 0.9rem;
+    margin: 0 0 0.3rem 0;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.rating i {
+    color: #ffd700; /* Gold for stars */
+}
+
+.rating span {
+    font-size: 0.9rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-card i {
+    font-size: 1.5rem;
+    color: #4caf50;
+}
+
+.stat-card h3 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.trend {
+    font-size: 0.8rem;
+    color: #4caf50;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.contact-info, .availability {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info h3, .availability h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.contact-info p, .availability p {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-info i, .availability i {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.reviews-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.review-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.review-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.review-content {
+    flex: 1;
+}
+
+.review-content h4 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0 0 0.3rem 0;
+}
+
+.review-content .rating {
+    margin-bottom: 0.3rem;
+}
+
+.review-content p {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+/* Booking Successful Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    max-width: 90%;
+    border: 2px solid #f5f5dc; /* Beige border to match SmartCare design */
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: #4caf50; /* Green checkmark */
+    margin-bottom: 1rem;
+}
+
+.modal-content h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.close-btn {
+    background-color: #ffffff;
+    color: #4caf50;
+    border: 1px solid #4caf50;
+}
+
+.close-btn:hover {
+    background-color: #e8f5e9;
+}
+
+/* Billings Section Styles */
+.billings-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.billing-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.billing-form h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: #f5f5f5;
+}
+
+.payment-method {
+    margin-bottom: 1rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.radio-label input {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.payment-logo {
+    width: 30px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.payment-logo.visa {
+    background-image: url('path/to/visa-logo.png');
+}
+
+.payment-logo.paypal {
+    background-image: url('path/to/paypal-logo.png');
+}
+
+.payment-logo.bank {
+    background-image: url('path/to/bank-logo.png');
+}
+
+.billing-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.payment-summary {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.payment-summary h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.total-payment {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.payment-summary h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.payment-summary p {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+}
+
+/* Billings Transactions Section Styles */
+.billings-transactions-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.summary-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.summary-card h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.summary-card .amount {
+    color: #4caf50;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.summary-card .update {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.transactions-table th, .transactions-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.transactions-table th {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.transactions-table td {
+    color: #333;
+}
+
+.transactions-table .status {
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.transactions-table .status.paid {
+    color: #4caf50; /* Green text for "Paid" */
+}
+
+.transactions-table .status.pending {
+    color: #f57c00; /* Orange text for "Pending" */
+}
+
+.transactions-table .status.overdue {
+    color: #d32f2f; /* Red text for "Overdue" */
+}
+
+.transactions-table i {
+    color: #4caf50;
+    cursor: pointer;
+}
+
+/* Chats Section Styles */
+.chats-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    height: calc(100vh - 120px); /* Adjust height to fit viewport minus header and padding */
+    overflow: hidden;
+}
+
+.chat-sidebar {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.chat-sidebar h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.chat-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.chat-contact.active {
+    background-color: #e8f5e9;
+}
+
+.chat-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.chat-info {
+    flex: 1;
+}
+
+.chat-info h3 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0 0 0.2rem 0;
+}
+
+.chat-info p {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+}
+
+.chat-time {
+    color: #666;
+    font-size: 0.7rem;
+    margin-right: 0.5rem;
+}
+
+.chat-contact i {
+    color: #4caf50;
+    font-size: 0.8rem;
+}
+
+.chat-area {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative; /* Ensure input stays at bottom */
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+}
+
+.chat-header h3 {
+    color: #333;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.call-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.call-buttons i {
+    color: #4caf50;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+    margin-bottom: 60px; /* Space for input at bottom */
+}
+
+.message {
+    margin: 0.5rem 0;
+    max-width: 70%;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.message.sent {
+    background-color: #e8f5e9;
+    color: #333;
+    margin-left: auto;
+}
+
+.message.received {
+    background-color: #4caf50;
+    color: #ffffff;
+    margin-right: auto;
+}
+
+.message-time {
+    color: #666;
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+    display: block;
+    text-align: right;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-top: 1px solid #ddd;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    z-index: 10; /* Ensure it stays above messages */
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: #f5f5f5;
+    outline: none; /* Remove default outline */
+    width: 100%; /* Ensure full width */
+}
+
+.chat-input i {
+    color: #4caf50;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        padding: 1rem;
+    }
+
+    .top-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .vitals-container {
+        max-width: 100%;
+        justify-content: space-between;
+    }
+
+    .vital-card {
+        width: 150px; /* Slightly smaller for tablets */
+        height: 100px;
+        min-width: 150px;
+        max-width: 33%;
+    }
+
+    .calendar-section {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .doctors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust for tablets */
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Adjust for tablets */
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr; /* Stack on tablets */
+    }
+
+    .billings-section {
+        grid-template-columns: 1fr; /* Stack on tablets */
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust for tablets */
+    }
+
+    .chats-section {
+        grid-template-columns: 1fr 2fr; /* Maintain split on tablets */
+    }
+
+    .content-grid {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .top-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .vitals-container {
+        flex-direction: row;
+        max-width: 100%;
+        justify-content: space-between;
+    }
+
+    .vital-card {
+        min-width: 120px;
+        max-width: 33%;
+        margin-bottom: 1rem;
+    }
+
+    .calendar-section {
+        min-width: 100%;
+        max-width: 100%;
+        margin-top: 1rem;
+    }
+
+    .doctors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Adjust for mobile */
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+
+    .billings-section {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+
+    .chats-section {
+        grid-template-columns: 1fr; /* Stack on mobile, full-width chat area */
+    }
+
+    .chat-sidebar {
+        display: none; /* Hide sidebar on mobile, show only chat area */
+    }
+
+    .chat-area {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .appointments-medications {
+        max-width: 100%;
+    }
+
+    .sidebar-links {
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .sidebar-links li {
+        margin: 0.5rem;
+    }
+
+    .search-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-input {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .user-profile {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .doctor-img-small {
+        display: none; /* Hide image on mobile for space */
+    }
+
+    .modal-content {
+        width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-section {
+        height: auto;
+        padding: 1rem;
+    }
+
+    .welcome-section h2 {
+        font-size: 1rem;
+    }
+
+    .welcome-section button {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .user-circle {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .doctors-grid {
+        grid-template-columns: 1fr; /* Stack cards vertically on very small screens */
+    }
+
+    .calendar {
+        max-width: 200px; /* Minimum width for very small screens */
+    }
+
+    .modal-content {
+        width: 250px;
+        padding: 1.5rem;
+    }
+}
+
+/* Add to patient-dashboard.css */
+
+/* Patient Section Styles */
+.patients-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.patient-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.patient-header h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+}
+
+.patient-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.patient-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.patient-table th, .patient-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.patient-table th {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.patient-table td {
+    color: #333;
+}
+
+.patient-table .action-btn.small {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    margin-right: 0.5rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.pagination-btn {
+    background-color: #ffffff;
+    color: #4caf50;
+    padding: 0.4rem 1rem;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn:hover {
+    background-color: #e8f5e9;
+}
+
+/* Adjust logout button in sidebar */
+.logout-btn {
+    margin-top: 2rem;
+    width: 80%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="#dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#patient"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="#doctor"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="#appointments"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="#reports"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="#billings"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="#chats"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Hello Cynthia 👋</h1>
+            <div class="user-profile">
+                <span class="user-circle">Cynthia Say, Patient</span>
+            </div>
+        </header>
+
+        <section class="dashboard-section">
+            <div class="welcome-section">
+                <h2>Welcome to the Patient Dashboard</h2>
+                <button class="book-appointment-btn">Book an Appointment</button>
+            </div>
+
+            <div class="top-row">
+                <div class="vitals-container">
+                    <div class="vital-card">
+                        <i class="fas fa-heartbeat"></i>
+                        <h3>Heart Rate</h3>
+                        <p>120 bpm <span class="progress">70%</span></p>
+                        <span>Weekly Report</span>
+                    </div>
+                    <div class="vital-card">
+                        <i class="fas fa-weight"></i>
+                        <h3>Weight</h3>
+                        <p>67kg <span class="progress">50%</span></p>
+                        <span>Weekly Report</span>
+                    </div>
+                    <div class="vital-card">
+                        <i class="fas fa-heart"></i>
+                        <h3>Overall Health</h3>
+                        <p>Great <span class="progress">80%</span></p>
+                        <span>Weekly Report</span>
+                    </div>
+                </div>
+                <!-- Calendar HTML -->
+<div class="calendar-container">
+    <div class="calendar-header-row">
+      <h3 class="month-title">March 2023</h3>
+      <button class="nav-button">→</button>
+    </div>
+    
+    <div class="weekday-header">
+      <div class="weekday">Sun</div>
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday">Sat</div>
+    </div>
+    
+    <div class="calendar-weeks">
+      <!-- Week 1 -->
+      <div class="week-row">
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+        <div class="day">1</div>
+        <div class="day">2</div>
+        <div class="day">3</div>
+        <div class="day">4</div>
+      </div>
+      
+      <!-- Week 2 -->
+      <div class="week-row">
+        <div class="day">5</div>
+        <div class="day">6</div>
+        <div class="day">7</div>
+        <div class="day">8</div>
+        <div class="day">9</div>
+        <div class="day">10</div>
+        <div class="day">11</div>
+      </div>
+      
+      <!-- Week 3 -->
+      <div class="week-row">
+        <div class="day">12</div>
+        <div class="day highlighted">13</div>
+        <div class="day">14</div>
+        <div class="day">15</div>
+        <div class="day">16</div>
+        <div class="day">17</div>
+        <div class="day">18</div>
+      </div>
+      
+      <!-- Week 4 -->
+      <div class="week-row">
+        <div class="day">19</div>
+        <div class="day">20</div>
+        <div class="day">21</div>
+        <div class="day">22</div>
+        <div class="day">23</div>
+        <div class="day highlighted">24</div>
+        <div class="day">25</div>
+      </div>
+      
+      <!-- Week 5 -->
+      <div class="week-row">
+        <div class="day">26</div>
+        <div class="day">27</div>
+        <div class="day">28</div>
+        <div class="day">29</div>
+        <div class="day">30</div>
+        <div class="day">31</div>
+        <div class="day empty"></div>
+      </div>
+    </div>
+  </div>
+  
+            <div class="content-grid">
+                <div class="doctors-section">
+                    <h3>Doctors Available</h3>
+                    <table class="doctors-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Field</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-prakesh.jpg" alt="Dr. Prakash Shamar" class="doctor-img">
+                                    <span>Dr. Prakash Shamar, Male</span>
+                                </td>
+                                <td>Medical Doctor</td>
+                                <td class="status available">Available</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-will.jpg" alt="Dr. Will White" class="doctor-img">
+                                    <span>Dr. Will White, Male</span>
+                                </td>
+                                <td>Neurologist</td>
+                                <td class="status unavailable">Unavailable</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-christine.jpg" alt="Dr. Christine Mars" class="doctor-img">
+                                    <span>Dr. Christine Mars, Female</span>
+                                </td>
+                                <td>Dermatologist</td>
+                                <td class="status available">Available</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-nicky.jpg" alt="Dr. Nicky Jones" class="doctor-img">
+                                    <span>Dr. Nicky Jones, Male</span>
+                                </td>
+                                <td>Dentist</td>
+                                <td class="status available">Available</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-emily.jpg" alt="Dr. Emily Patel" class="doctor-img">
+                                    <span>Dr. Emily Patel, Female</span>
+                                </td>
+                                <td>MRI Scan</td>
+                                <td class="status available">Available</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-lilly.jpg" alt="Dr. Lilly Rights" class="doctor-img">
+                                    <span>Dr. Lilly Rights, Female</span>
+                                </td>
+                                <td>General Doctor</td>
+                                <td class="status unavailable">Unavailable</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                            <tr>
+                                <td class="doctor-cell">
+                                    <img src="images/doctor-vivian.jpg" alt="Dr. Vivian Parv" class="doctor-img">
+                                    <span>Dr. Vivian Parv, Female</span>
+                                </td>
+                                <td>General Doctor</td>
+                                <td class="status available">Available</td>
+                                <td><button class="action-btn">Chat</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="pagination-btn">Prev</button>
+                        <span>1 2 3 4 5 6 7</span>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                </div>
+
+                <div class="appointments-medications">
+                    <div class="appointments-section accepted-section">
+                        <h3>Accepted</h3>
+                        <div class="appointment-card">
+                            <div class="appointment-info">
+                                <img src="images/doctor-prakesh.jpg" alt="Dr. Prakash Shamar" class="doctor-img">
+                                <div>
+                                    <p>Dr. Prakash Shamar, Male</p>
+                                    <span>Consultation</span>
+                                    <span>2:00-3:00 pm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <div class="appointment-info">
+                                <img src="images/doctor-christine.jpg" alt="Dr. Christine Mars" class="doctor-img">
+                                <div>
+                                    <p>Dr. Christine Mars, Female</p>
+                                    <span>Consultation</span>
+                                    <span>1:00-2:00 pm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <div class="appointment-info">
+                                <img src="images/doctor-emily.jpg" alt="Dr. Emily Patel" class="doctor-img">
+                                <div>
+                                    <p>Dr. Emily Patel, Female</p>
+                                    <span>Consultation</span>
+                                    <span>9:00-10:00 am</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <div class="appointment-info">
+                                <img src="images/doctor-christine.jpg" alt="Dr. Christine Mars" class="doctor-img">
+                                <div>
+                                    <p>Dr. Christine Mars, Female</p>
+                                    <span>Consultation</span>
+                                    <span>3:00-4:00 pm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="appointments-section rescheduled-section">
+                        <h3>Rescheduled</h3>
+                        <div class="appointment-card">
+                            <div class="appointment-info">
+                                <img src="images/doctor-will.jpg" alt="Dr. Will White" class="doctor-img">
+                                <div>
+                                    <p>Dr. Will White, Male</p>
+                                    <span>Consultation</span>
+                                    <span>4:00-5:00 pm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="medications-section">
+                        <h3>Medications</h3>
+                        <div class="medication-card">
+                            <p>Paracetamol - 500mg (Take 1 tablet every 6 hours)</p>
+                        </div>
+                        <div class="medication-card">
+                            <p>Amoxicillin - 250mg (Take 1 tablet every 8 hours)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
