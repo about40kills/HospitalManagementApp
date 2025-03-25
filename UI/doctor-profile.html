@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Dr. Prakesh Shamar Profile</title>
+    <link rel="stylesheet" href="patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- For star ratings -->
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html" class="active"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Dr. Prakesh Shamar Profile</h1>
+        </header>
+
+        <section class="doctor-profile-section">
+            <div class="doctor-header">
+                <img src="images/doctor-prakesh.jpg" alt="Dr. Prakesh Shamar" class="doctor-img-large">
+                <div class="doctor-info">
+                    <h2>Dr. Prakesh Shamar</h2>
+                    <p>Cardiologist</p>
+                    <p>18 years of Experience</p>
+                    <div class="rating">
+                        <span>4.5</span>
+                        <i class="fas fa-star"></i>
+                        <span>200+ Reviews</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Total Patients</h3>
+                    <p>200 <span class="trend">↑10%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Total Surgeries</h3>
+                    <p>100 <span class="trend">↑5%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Appointments</h3>
+                    <p>50 <span class="trend">↑5%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Earnings</h3>
+                    <p>$200,000 <span class="trend">↑5%</span></p>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-phone"></i> Mobile: +233 234 343 6234</p>
+                    <p><i class="fas fa-envelope"></i> Email: hello@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Location: Accra, Ghana</p>
+                    <button class="action-btn">Message</button>
+                </div>
+                <div class="availability">
+                    <h3>Availability</h3>
+                    <p>Mondays: 2:00pm - 5:00pm</p>
+                    <p>Tuesdays: 10:00am - 2:00pm</p>
+                    <p>Thursdays: 10:00am - 2:00pm</p>
+                    <p>Fridays: 12:00pm - 4:00pm</p>
+                    <button class="action-btn">Book Appointment</button>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h3>Patient Reviews</h3>
+                <div class="review-card">
+                    <img src="images/patient-lilly.jpg" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="images/patient-lilly.jpg" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="images/patient-lilly.jpg" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Successful Modal -->
+        <div id="booking-success-modal" class="modal">
+            <div class="modal-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Booking Successful</h2>
+                <div class="modal-actions">
+                    <button class="action-btn modal-btn">View</button>
+                    <button class="action-btn modal-btn close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript for Modal Functionality -->
+        <script>
+            // Get modal and buttons
+            const modal = document.getElementById('booking-success-modal');
+            const closeBtn = document.querySelector('.close-btn');
+
+            // Function to show the modal
+            function showBookingSuccess() {
+                modal.style.display = 'flex';
+            }
+
+            // Function to close the modal
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // Trigger modal when booking button is clicked (replace with actual booking logic)
+            document.querySelector('.availability button').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Simulate successful booking (replace with backend call)
+                showBookingSuccess();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
+</html>

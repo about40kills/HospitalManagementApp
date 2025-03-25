@@ -1,0 +1,14 @@
+
+<header>
+    <h2>SmartCare</h2>
+    <nav>
+        <% if (user) { %>
+            <a href="/create-post">Post</a>
+            <a href="/logout">Log Out</a>
+        <% } else { %>
+            <a href="/login">Login</a>
+        <% } %>
+
+        
+    </nav>
+</header>

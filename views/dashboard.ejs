@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("includes/head") %>
+<body>
+    <%- include("includes/header") %>
+    <div class="container">
+        <h2>
+            <% if (user) { %>
+                <b>Welcome, <%= user.username %></b>
+            <% }else{ %>
+                <b>Welcome <%= name %></b>
+            <% } %> 
+        </h2>
+        <% errors.forEach(error => { %>
+            <p class="notice"> <%= error %> </p>
+        <% }) %>
+        <div class="card">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus dolorum asperiores suscipit sunt! Nobis veniam earum tenetur dolorem autem! Officia totam eaque non enim distinctio aliquid? Quis libero officia vel?</p>
+        </div>
+    </div>
+    <%- include("includes/footer") %>
+</body>
+</html>

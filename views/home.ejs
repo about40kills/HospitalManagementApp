@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("includes/head") %>
+<body>
+    <%- include("includes/header") %>
+    <main>
+        <h2>
+            <% if (user) { %>
+                <b>Welcome, <%= user.username %></b>
+            <% }else{ %>
+                <b>Welcome <%= name %></b>
+            <% } %> 
+        </h2>
+        <% errors.forEach(error => { %>
+            <p class="notice"> <%= error %> </p>
+        <% }) %>
+        <fieldset>
+            <legend>Create an account</legend> <br>
+            <form action="/register" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" 
+                            value="<%= typeof formData !== 'undefined' ? formData.username : '' %>" 
+                            placeholder="Enter username">
+                </div>
+        
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" 
+                            value="<%= typeof formData !== 'undefined' ? formData.email : '' %>" 
+                            placeholder="Enter email">
+                </div>
+        
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password">
+                </div>
+        
+        
+                <!-- Role selection radio buttons -->
+                <div class="form-group">
+                    <label>Role</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="role-patient" name="role" value="patient"
+                                    <%= (typeof formData !== 'undefined' && formData.role === 'patient') ? 'checked' : '' %>>
+                            <label for="role-patient">Patient</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="role-doctor" name="role" value="doctor"
+                                    <%= (typeof formData !== 'undefined' && formData.role === 'doctor') ? 'checked' : '' %>>
+                            <label for="role-doctor">Doctor</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="role-admin" name="role" value="admin"
+                                    <%= (typeof formData !== 'undefined' && formData.role === 'admin') ? 'checked' : '' %>>
+                            <label for="role-admin">Admin</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">submit</button>
+            </form>
+        </fieldset>
+    </main>
+    <%- include("includes/footer") %>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Patient</title>
+    <link rel="stylesheet" href="patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html" class="active"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+        <button class="action-btn logout-btn" style="margin-top: 2rem; width: 80%;">Logout</button>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Patient</h1>
+            <div class="user-profile">
+                <span class="user-circle">Admin</span>
+                <img src="images/doctor-placeholder.jpg" alt="Dr. Prakesh Sharma" class="doctor-img-small">
+                <span style="margin-left: 0.5rem;">Dr. Prakesh Sharma</span>
+            </div>
+        </header>
+
+        <section class="patients-section">
+            <div class="patient-header">
+                <h2>Patient List</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search Here" class="search-input">
+                    <i class="fas fa-search search-icon"></i>
+                    <select class="filter-dropdown">
+                        <option value="">Filter</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="patient-stats">
+                <div class="stat-card">
+                    <h3>Total Patients</h3>
+                    <p>10,000 <span class="trend">↑ 10% Last Month</span></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Patients</h3>
+                    <p>2,000 <span class="trend">↓ 5% Last Month</span></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Appointments</h3>
+                    <p>1000 <span class="trend">↑ 5% Last Month</span></p>
+                </div>
+            </div>
+
+            <div class="patient-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Condition</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lisa White</td>
+                            <td>30</td>
+                            <td>Diabetes</td>
+                            <td>
+                                <button class="action-btn small">View Profile</button>
+                                <button class="action-btn small">Schedule</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <button class="pagination-btn">Prev</button>
+                <span>1 2 3 ... 6 7</span>
+                <button class="pagination-btn">Next</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Are you sure you want to log out?</h2>
+            <div class="modal-actions">
+                <button class="action-btn close-btn">Close</button>
+                <button class="action-btn secondary logout-confirm-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.querySelector('.logout-btn');
+            const logoutModal = document.getElementById('logoutModal');
+            const closeBtn = document.querySelector('.close-btn');
+            const logoutConfirmBtn = document.querySelector('.logout-confirm-btn');
+
+            logoutBtn.addEventListener('click', () => {
+                logoutModal.style.display = 'flex';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                logoutModal.style.display = 'none';
+            });
+
+            logoutConfirmBtn.addEventListener('click', () => {
+                // Add logout logic here (e.g., redirect to login page)
+                window.location.href = 'login.html'; // Example redirect
+                logoutModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

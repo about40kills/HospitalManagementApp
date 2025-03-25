@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .notice{
+            background-color: rgb(247, 185, 185);
+            padding: 10px;
+            border: 2px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Deft's page</h2>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Features</a>
+            <a href="#">signUp</a>
+        </nav>
+    </header>
+    <% errors.forEach((error) => { %>
+        <p class="notice"> <%= error %>  </p>
+    <% }) %>
+    <h2>
+        <% 
+            now = new Date();
+            let hour = now.getHours();
+
+            let greetings = "";
+            if (hour < 12) greetings = "Good Morning";
+            if (hour > 12) greetings = "Good Evening";
+            if (hour == 12) greetings = "Good Afternoon";
+
+        %>
+
+        <%= greetings %>!
+    </h2>
+    <form action="/register" method="post">
+        <fieldset>
+            <legend>Create an account</legend>
+            <div class="input_box">
+                <input type="text" name="username" id="username" placeholder="Username" autocomplete="off" autocapitalize="on">
+            </div>
+            <div class="input_box">
+                <input type="password" name="password" id="password" placeholder="Password" autocomplete="off">
+            </div>
+            <button>Sign Up</button>
+        </fieldset>
+    </form>
+
+    <footer>
+        <% today = new Date() %>
+        <small>&copy; Copyright <%= today.getFullYear() %></small>
+    </footer>
+</body>
+</html>

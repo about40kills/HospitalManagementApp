@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare</title>
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #e8f5e9; /* Beige background */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: transparent; /* Match the login container background */
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    border-color: #e8f5e9;
+    align-items: center;
+    width: 100%;
+    z-index: 10; /* Higher z-index to appear on top */
+    position: fixed; /* Fixed position to stay at the top */
+    height: 60px; /* Fixed height for nav */
+}
+
+.logo {
+    font-family: poppins, sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+/* Login Section Styles - Remove duplicate section */
+.signup-section {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+    padding-top: 0; /* No padding to allow seamless blending */
+}
+
+.signup-container {
+    flex: 1;
+    max-width: 450px;
+    background-color: #e8f5e9; /* Match nav background */
+    padding: 2rem;
+    padding-top: 80px; /* Add padding to account for fixed nav */
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh; /* Full height */
+}
+
+.signup-container h2 {
+    color: #2e7d32;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.signup-container h3 {
+    color: #3da142;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.signup-image {
+    flex: 1.5; /* More space for image */
+    position: relative;
+    overflow: hidden;
+    height: 100vh; /* Full viewport height */
+}
+
+.signup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* Form styles remain the same */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-size: 1rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+}
+
+button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: #1b5e20;
+}
+
+.signup-links {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.signup-links a {
+    color: #2e7d32;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.signup-links a:hover {
+    text-decoration: underline;
+}
+
+.signup-container p {
+    text-align: center;
+    margin-top: 1rem;
+    color: #333;
+}
+
+.signup-container p a {
+    color: #2e7d32;
+    text-decoration: none;
+}
+
+.signup-container p a:hover {
+    text-decoration: underline;
+}
+.radio-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+    
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    
+    .radio-option input[type="radio"] {
+        width: auto;
+        margin-right: 0.25rem;
+    }
+    
+    .radio-option label {
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        position: relative;
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+        height: auto;
+    }
+
+    .signup-section {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .signup-container {
+        max-width: 100%;
+        padding: 2rem 1rem;
+        padding-top: 1rem; /* Reset padding on mobile */
+        height: auto;
+    }
+
+    .signup-image {
+        height: 300px;
+        position: relative;
+    }
+
+    .signup-image img {
+        position: relative;
+    }
+}
+    </style>
+</head>
+<body>
+    
+    <h2>SmartCare</h2>
+<section class="container">
+    <div class="row">
+        <div class=""></div>
+            <div class="card" style="width: 500px; height: 300;">
+                <form id="signup-form" action="/registerasDoc" method="POST">
+                    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+                        <div class="alert alert-danger">
+                            <ul>
+                                <% errors.forEach(function(error) { %>
+                                    <li><%= error %></li>
+                                <% }); %>
+                            </ul>
+                        </div>
+                    <% } %>
+            
+                    <!-- Rest of your form fields -->
+                    <div class="card-body overflow-auto" style="max-height: 530px;">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" 
+                                    placeholder="Enter Full Name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" 
+                                    placeholder="Enter email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="form-group">
+                            <label for="specialty">Specialty</label>
+                            <input type="text" id="specialty" name="specialty" placeholder="Your Specialty">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Specialty</label>
+                            <input type="number" id="experience" name="experience" placeholder="Your experience in years">
+                        </div>
+                        <div class="mt-4">
+                            <label for="gender" class="form-label">Select your Gender</label>
+                            <select name="gender" id="gender">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+            
+            
+            
+                    <!-- Role selection radio buttons -->
+            
+                    <button type="submit">Sign Up</button>
+                    <div class="signup-links">
+                        <p>Already have an Account? <a href="/login">Login</a></p>
+                    </div>
+                    </form>
+                    
+            </div>
+            <div class="card col-md-7">
+                <div class="">
+                <div class="signup-image">
+                    <img src="https://plus.unsplash.com/premium_photo-1681842883882-b5c1c9f37869?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDQ1fHxtZWRpY2FsJTIwcHJvZmVzc3Npb25hbHN8ZW58MHx8MHx8fDA%3D" alt="Medical professionals">
+                </div>
+            </div>
+            </div>
+        
+        </div>
+</section>
+</body>
+</html>

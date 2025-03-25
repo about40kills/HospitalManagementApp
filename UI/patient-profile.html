@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="patient-profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Patient Profile</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Search Bar (Added from First Code) -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search Here">
+            <div class="menu-icon">☰</div>
+        </div>
+
+        <!-- Patient List Breadcrumb (Added from First Code) -->
+        <div class="patient-list">Patient List > Lilly White</div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Column -->
+            <div class="profile-left">
+                <div class="content-wrapper">
+                    <div class="profile-image-container">
+                        <img src="images/patient-lilly.jpg" alt="Lilly White" class="profile-image">
+                        <div class="edit-image-button">
+                            <i class="fas fa-chevron-left" aria-label="Edit image"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="patient-info">
+                        <h2 class="patient-name">Lilly White</h2>
+                        <p class="gender">Female</p>
+                        <p class="age">30</p>
+                        <p class="blood-group">Blood Group <span>O+</span></p>
+                    </div>
+                    
+                    <div class="section medical-history-section">
+                        <h3 class="section-title">Medical History</h3>
+                        <p><strong>Diagnosis:</strong> Malaria</p>
+                        <p><strong>Current Medication:</strong> None</p>
+                        <p><strong>Allergies:</strong> None</p>
+                    </div>
+                    
+                    <div class="section contact-info-section">
+                        <h3 class="section-title">Contact Information</h3>
+                        <p><strong>Email:</strong> hello@gmail.com</p>
+                        <p><strong>Phone Number:</strong> (233) 34343344</p>
+                        <p><strong>Address:</strong> Legon-Accra</p>
+                    </div>
+                </div>
+                <button class="edit-button">Edit Info</button>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="profile-right">
+                <!-- Appointments Section -->
+                <div class="section appointments-section">
+                    <h3 class="section-title">Upcoming Appointments</h3>
+                    <div class="appointment-list">
+                        <div class="appointment-card">
+                            <img src="images/doctor-placeholder.jpg" alt="Dr. Prakesh Sharma" class="doctor-img-small">
+                            <div class="appointment-info">
+                                <p><strong>Dr. Prakesh Shamar</strong></p>
+                                <p>Male</p>
+                            </div>
+                            <div class="appointment-time">
+                                <p>20th March, 2025</p>
+                                <p>2:00-3:00pm</p>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <img src="images/doctor-placeholder.jpg" alt="Dr. Prakesh Sharma" class="doctor-img-small">
+                            <div class="appointment-info">
+                                <p><strong>Dr. Prakesh Shamar</strong></p>
+                                <p>Male</p>
+                            </div>
+                            <div class="appointment-time">
+                                <p>20th March, 2025</p>
+                                <p>3:00-5:00pm</p>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <img src="images/doctor-placeholder.jpg" alt="Dr. Prakesh Sharma" class="doctor-img-small">
+                            <div class="appointment-info">
+                                <p><strong>Dr. Prakesh Shamar</strong></p>
+                                <p>Male</p>
+                            </div>
+                            <div class="appointment-time">
+                                <p>25th March, 2025</p>
+                                <p>2:00-3:00pm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Medications Section -->
+                <div class="section medications-section">
+                    <h3 class="section-title">Medications</h3>
+                    <div class="medications-table-container">
+                        <table class="medications-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Dosage</th>
+                                    <th>Duration</th>
+                                    <th>Start Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Paracetamol</td>
+                                    <td>2 pills</td>
+                                    <td>4 days</td>
+                                    <td>21/02/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Flagel</td>
+                                    <td>2 teaspoons</td>
+                                    <td>4 weeks</td>
+                                    <td>21/04/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>Paracetamol</td>
+                                    <td>2 pills</td>
+                                    <td>4 days</td>
+                                    <td>21/02/2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
