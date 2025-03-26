@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Billings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5dc; /* Beige background */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    padding: 1rem 0; /* Adjusted padding to align content properly */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50; /* Green for SmartCare */
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure left alignment */
+    padding-left: 1rem; /* Add padding to align with navigation links */
+}
+
+.sidebar-links {
+    list-style: none;
+}
+
+.sidebar-links li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Consistent padding for alignment */
+    border-radius: 5px;
+}
+
+.sidebar-links a i {
+    margin-right: 0.5rem;
+    color: #4caf50;
+}
+
+.sidebar-links a:hover, .sidebar-links a.active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width for alignment */
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #ffffff; /* White background for header on all pages */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-circle {
+    background-color: #e0e0e0; /* Light gray circle */
+    color: #666;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Circular shape */
+    font-size: 0.9rem;
+}
+
+.billings-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.billing-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.billing-form h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Improved form group styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+/* Improved payment method styling */
+.payment-method {
+    margin: 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1 0 28%;
+    min-width: 120px;
+}
+
+.radio-label:hover {
+    border-color: #4caf50;
+    background-color: #f9f9f9;
+}
+
+.radio-label input[type="radio"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: #4caf50;
+}
+
+.radio-label input[type="radio"]:checked + span + span {
+    font-weight: 500;
+    color: #4caf50;
+}
+
+.payment-logo {
+    width: 40px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Since the actual images might be missing, adding placeholder colored backgrounds */
+.payment-logo.visa {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNX1JnQfKutP1R5uHRs49421u6UxCuZGMkCg&s');
+    border-radius: 4px;
+}
+
+.payment-logo.paypal {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png');
+    border-radius: 4px;
+}
+
+.payment-logo.mastercard {
+    background-image: url('https://imageio.forbes.com/blogs-images/steveolenski/files/2016/07/Mastercard_new_logo-1200x865.jpg?height=512&width=711&fit=bounds');
+    border-radius: 4px;
+}
+
+/* Payment summary improvements */
+.payment-summary {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+}
+
+.total-payment {
+    background-color: #4caf50;
+    color: #ffffff;
+    padding: 1.2rem;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+}
+
+.payment-summary h3 {
+    color: #4caf50;
+    font-size: 1.1rem;
+    margin: 1.5rem 0 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.payment-summary h3:first-of-type {
+    margin-top: 0;
+}
+
+.payment-summary p {
+    color: #333;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-summary p::after {
+    content: attr(data-value);
+    font-weight: 500;
+}
+/* Updated billing-actions and button styles */
+.billing-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.action-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    text-align: center;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn.secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.action-btn.secondary:hover {
+    background-color: #d0d0d0;
+}
+
+.action-btn:not(.secondary) {
+    background-color: #4caf50;
+    color: white;
+}
+
+.action-btn:not(.secondary):hover {
+    background-color: #45a049;
+}
+
+/* Responsive styling for buttons */
+@media (max-width: 768px) {
+    .billing-actions {
+        flex-direction: column-reverse; /* Put primary action on top on mobile */
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Billings</h1>
+        </header>
+
+        <section class="billings-section">
+            <div class="billing-form">
+                <h2>Client Information</h2>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter name" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="eg. hello@gmail.com" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+                    <input type="tel" id="contact" placeholder="eg. +233 234 343 6234" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="eg. Accra, Ghana" class="input-field">
+                </div>
+
+                <h2>Payment Method</h2>
+                <div class="payment-method">
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="visa" checked>
+                        <span class="payment-logo visa"></span> Visa
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="paypal">
+                        <span class="payment-logo paypal"></span> PayPal
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="mastercard">
+                        <span class="payment-logo mastercard"></span> Mastercard
+                    </label>
+                </div>
+
+                <div class="billing-actions">
+                    <button class="action-btn secondary">Back</button>
+                    <button class="action-btn">Pay Now</button>
+                </div>
+            </div>
+
+            <div class="payment-summary">
+                <h2>Total Payment</h2>
+                <div class="total-payment">$1,120</div>
+
+                <h3>Payment Summary</h3>
+                <p>Lab test: $100</p>
+                <p>Treatment: $500</p>
+                <p>Medicine: $700</p>
+                <p>Others: $12</p>
+
+                <h3>Payment Information</h3>
+                <p>Email: mae_sanders@gmail.com</p>
+                <p>Name: Claudia Cox</p>
+                <p>Card Number: **** **** **** 234</p>
+                <p>Expiration Date: mm/yy</p>
+                <p>CVC: 234</p>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

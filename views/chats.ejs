@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Chats</title>
+    <link rel="stylesheet" href="patient-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5dc; /* Beige background */
+    display: flex;
+    min-height: 100vh;
+}
+/* User Profile and Logout Button Styles */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-circle {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-btn {
+    background-color: #f44336; /* Red color */
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    padding: 1rem 0; /* Adjusted padding to align content properly */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50; /* Green for SmartCare */
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure left alignment */
+    padding-left: 1rem; /* Add padding to align with navigation links */
+}
+
+.sidebar-links {
+    list-style: none;
+}
+
+.sidebar-links li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Consistent padding for alignment */
+    border-radius: 5px;
+}
+
+.sidebar-links a i {
+    margin-right: 0.5rem;
+    color: #4caf50;
+}
+
+.sidebar-links a:hover, .sidebar-links a.active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+        /* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width for alignment */
+    flex: 1;
+    padding: 1.5rem;
+}
+        /* Chats Section Styles */
+.chats-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    height: calc(100vh - 120px); /* Adjust height to fit viewport minus header and padding */
+    overflow: hidden;
+}
+
+.chat-sidebar {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.chat-sidebar h2 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.chat-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.chat-contact.active {
+    background-color: #e8f5e9;
+}
+
+.chat-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.chat-info {
+    flex: 1;
+}
+
+.chat-info h3 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0 0 0.2rem 0;
+}
+
+.chat-info p {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+}
+
+.chat-time {
+    color: #666;
+    font-size: 0.7rem;
+    margin-right: 0.5rem;
+}
+
+.chat-contact i {
+    color: #4caf50;
+    font-size: 0.8rem;
+}
+
+.chat-area {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative; /* Ensure input stays at bottom */
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
+}
+
+.chat-header h3 {
+    color: #333;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.call-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.call-buttons i {
+    color: #4caf50;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+    margin-bottom: 60px; /* Space for input at bottom */
+}
+
+.message {
+    margin: 0.5rem 0;
+    max-width: 70%;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.message.sent {
+    background-color: #e8f5e9;
+    color: #333;
+    margin-left: auto;
+}
+
+.message.received {
+    background-color: #4caf50;
+    color: #ffffff;
+    margin-right: auto;
+}
+
+.message-time {
+    color: #666;
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+    display: block;
+    text-align: right;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-top: 1px solid #ddd;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    z-index: 10; /* Ensure it stays above messages */
+}
+
+.chat-input-field {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background-color: #f5f5f5;
+    outline: none; /* Remove default outline */
+    width: 100%; /* Ensure full width */
+}
+
+.chat-input i {
+    color: #4caf50;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #ffffff; /* White background for header on all pages */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+}
+  /* Logout Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000; /* Ensure it stays above other elements */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-actions .action-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-actions .close-btn {
+            background-color: #f44336; /* Red */
+            color: #ffffff;
+        }
+
+        .modal-actions .logout-confirm-btn {
+            background-color: #4caf50; /* Green */
+            color: #ffffff;
+        }
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        padding: 1rem;
+    }
+
+    .top-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .vitals-container {
+        max-width: 100%;
+        justify-content: space-between;
+    }
+
+    .vital-card {
+        width: 150px; /* Slightly smaller for tablets */
+        height: 100px;
+        min-width: 150px;
+        max-width: 33%;
+    }
+
+    .calendar-section {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .doctors-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust for tablets */
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Adjust for tablets */
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr; /* Stack on tablets */
+    }
+
+    .billings-section {
+        grid-template-columns: 1fr; /* Stack on tablets */
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust for tablets */
+    }
+
+    .chats-section {
+        grid-template-columns: 1fr 2fr; /* Maintain split on tablets */
+    }
+
+    .content-grid {
+        grid-template-columns: 3fr 2fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="../views/patient-dashboard.ejs"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html" class="active"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Chats</h1>
+            <div class="user-profile">
+                <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                <button class="action-btn logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <section class="chats-section">
+            <div class="chat-sidebar">
+                <h2>Chats</h2>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>Good Afternoon</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact active">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="chat-contact">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <div class="chat-info">
+                        <h3>Lily Park</h3>
+                        <p>how are you doing...</p>
+                    </div>
+                    <span class="chat-time">12:00</span>
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+
+            <div class="chat-area">
+                <div class="chat-header">
+                    <img src="https://plus.unsplash.com/premium_photo-1678486955261-bbd824e18aee?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjV8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily Park" class="chat-img">
+                    <h3>Lily Park</h3>
+                    <div class="call-buttons">
+                        <i class="fas fa-phone"></i>
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                <div class="chat-messages">
+                    <div class="message sent">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message received">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message sent">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message received">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message sent">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message received">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                    <div class="message sent">
+                        <p>Hi doctor, Good morning</p>
+                        <span class="message-time">12:00</span>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Type Message" class="chat-input-field" id="chatInput">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logoutModal">
+        <div class="modal-content">
+            <h2>Are you sure you want to log out?</h2>
+            <div class="modal-actions">
+                <button class="action-btn close-btn">Close</button>
+                <button class="action-btn secondary logout-confirm-btn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.querySelector('.logout-btn');
+            const logoutModal = document.getElementById('logoutModal');
+            const closeBtn = document.querySelector('.close-btn');
+            const logoutConfirmBtn = document.querySelector('.logout-confirm-btn');
+
+            logoutBtn.addEventListener('click', () => {
+                logoutModal.style.display = 'flex';
+            });
+
+            closeBtn.addEventListener('click', () => {
+                logoutModal.style.display = 'none';
+            });
+
+            logoutConfirmBtn.addEventListener('click', () => {
+                // Add logout logic here (e.g., redirect to login page)
+                window.location.href = 'login.html'; // Example redirect
+                logoutModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

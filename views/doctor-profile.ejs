@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- For star ratings -->
+    <style>
+         * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5dc; /* Beige background */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    padding: 1rem 0; /* Adjusted padding to align content properly */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50; /* Green for SmartCare */
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure left alignment */
+    padding-left: 1rem; /* Add padding to align with navigation links */
+}
+
+.sidebar-links {
+    list-style: none;
+}
+
+.sidebar-links li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Consistent padding for alignment */
+    border-radius: 5px;
+}
+
+.sidebar-links a i {
+    margin-right: 0.5rem;
+    color: #4caf50;
+}
+
+.sidebar-links a:hover, .sidebar-links a.active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width for alignment */
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #ffffff; /* White background for header on all pages */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+/* Doctor Profile Section Styles */
+.doctor-profile-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.doctor-header {
+    background-color: #4caf50; /* Green background for header */
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.doctor-img-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-info h2 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.doctor-info p {
+    font-size: 0.9rem;
+    margin: 0 0 0.3rem 0;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.rating i {
+    color: #ffd700; /* Gold for stars */
+}
+
+.rating span {
+    font-size: 0.9rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-card i {
+    font-size: 1.5rem;
+    color: #4caf50;
+}
+
+.stat-card h3 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.stat-card p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.trend {
+    font-size: 0.8rem;
+    color: #4caf50;
+}
+
+/* Improved details-grid styling */
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info, .availability {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-info h3, .availability h3 {
+    color: #4caf50;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.contact-info p, .availability p {
+    color: #333;
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.contact-info i, .availability i {
+    color: #4caf50;
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Action Buttons */
+.action-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: #ffffff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    align-self: flex-start;
+}
+
+.action-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+/* Improved Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: #4caf50;
+    margin-bottom: 1rem;
+}
+
+.modal-content h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.modal-btn {
+    padding: 0.8rem 1.5rem;
+    min-width: 100px;
+    margin-top: 0;
+}
+
+.close-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.close-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+    
+    .action-btn {
+        width: 100%;
+        padding: 0.8rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        margin-top: 0.5rem;
+    }
+}
+.reviews-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+}
+
+.review-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.review-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ff9e7d; /* Pink background for image placeholder */
+}
+
+.review-content {
+    flex: 1;
+}
+
+.review-content h4 {
+    color: #333;
+    font-size: 0.9rem;
+    margin: 0 0 0.3rem 0;
+}
+
+.review-content .rating {
+    margin-bottom: 0.3rem;
+}
+
+.review-content p {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+}
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html" class="active"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Dr. Prakesh Shamar Profile</h1>
+        </header>
+
+        <section class="doctor-profile-section">
+            <div class="doctor-header">
+                <img src="https://plus.unsplash.com/premium_photo-1661746228321-8de24c08c6a2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGF0aWVudHMlMjBwcm9maWxlJTIwcGljdHVyZXN8ZW58MHx8MHx8fDA%3D" alt="Dr. Prakesh Shamar" class="doctor-img-large">
+                <div class="doctor-info">
+                    <h2>Dr. Prakesh Shamar</h2>
+                    <p>Cardiologist</p>
+                    <p>18 years of Experience</p>
+                    <div class="rating">
+                        <span>4.5</span>
+                        <i class="fas fa-star"></i>
+                        <span>200+ Reviews</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Total Patients</h3>
+                    <p>200 <span class="trend">↑10%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Total Surgeries</h3>
+                    <p>100 <span class="trend">↑5%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Appointments</h3>
+                    <p>50 <span class="trend">↑5%</span></p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>Earnings</h3>
+                    <p>$200,000 <span class="trend">↑5%</span></p>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><i class="fas fa-phone"></i> Mobile: +233 234 343 6234</p>
+                    <p><i class="fas fa-envelope"></i> Email: hello@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Location: Accra, Ghana</p>
+                    <button class="action-btn">Message</button>
+                </div>
+                <div class="availability">
+                    <h3>Availability</h3>
+                    <p>Mondays: 2:00pm - 5:00pm</p>
+                    <p>Tuesdays: 10:00am - 2:00pm</p>
+                    <p>Thursdays: 10:00am - 2:00pm</p>
+                    <p>Fridays: 12:00pm - 4:00pm</p>
+                    <button class="action-btn">Book Appointment</button>
+                </div>
+            </div>
+
+            <div class="reviews-section">
+                <h3>Patient Reviews</h3>
+                <div class="review-card">
+                    <img src="https://images.unsplash.com/photo-1672527843075-2a7a0ca859ad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="https://images.unsplash.com/photo-1672527843075-2a7a0ca859ad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <img src="https://images.unsplash.com/photo-1672527843075-2a7a0ca859ad?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Lily White" class="review-img">
+                    <div class="review-content">
+                        <h4>Lily White</h4>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>Es un médico excepcional, hace demasia tiempo que un lector se distrae con el contenido del texto de un sitio.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Successful Modal -->
+        <div id="booking-success-modal" class="modal">
+            <div class="modal-content">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Booking Successful</h2>
+                <div class="modal-actions">
+                    <button class="action-btn modal-btn">View</button>
+                    <button class="action-btn modal-btn close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript for Modal Functionality -->
+        <script>
+            // Get modal and buttons
+            const modal = document.getElementById('booking-success-modal');
+            const closeBtn = document.querySelector('.close-btn');
+
+            // Function to show the modal
+            function showBookingSuccess() {
+                modal.style.display = 'flex';
+            }
+
+            // Function to close the modal
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // Trigger modal when booking button is clicked (replace with actual booking logic)
+            document.querySelector('.availability button').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Simulate successful booking (replace with backend call)
+                showBookingSuccess();
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
+</html>
