@@ -120,7 +120,7 @@ app.post("/signup", async (req, res) => {
 });
 
 
-// Simple login route
+
 // Simple login route
 app.post("/", async (req, res) => {
     try {
@@ -150,7 +150,7 @@ app.post("/", async (req, res) => {
 
         
         // Get User model
-        const User = sequelize.models.User;
+        const User = sequelize.models.User; 
 
         
         // Find user by email
@@ -209,6 +209,7 @@ app.get("/patient-dashboard", (req, res) => {
     return res.render("patient-dashboard");
 }
 );
+
 
 app.use(`/api/users`,require('./src/routes/userRoutes'));
 app.use(`/api/patients`,require('./src/routes/patientRoutes'));
