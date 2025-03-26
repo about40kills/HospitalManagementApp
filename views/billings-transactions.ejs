@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Billings Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+         * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f6f6e5; /* Beige background */
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    height: 100vh;
+    position: fixed;
+    padding: 1rem 0; /* Adjusted padding to align content properly */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50; /* Green for SmartCare */
+    margin-bottom: 2rem;
+    text-align: left; /* Ensure left alignment */
+    padding-left: 1rem; /* Add padding to align with navigation links */
+}
+
+.sidebar-links {
+    list-style: none;
+}
+
+.sidebar-links li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem; /* Consistent padding for alignment */
+    border-radius: 5px;
+}
+
+.sidebar-links a i {
+    margin-right: 0.5rem;
+    color: #4caf50;
+}
+
+.sidebar-links a:hover, .sidebar-links a.active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width for alignment */
+    flex: 1;
+    padding: 1.5rem;
+}
+
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    background-color: #ffffff; /* White background for header on all pages */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #4caf50;
+    font-size: 1.5rem;
+    text-align: center;
+    flex: 1;
+}
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-circle {
+    background-color: #e0e0e0; /* Light gray circle */
+    color: #666;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Circular shape */
+    font-size: 0.9rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Increased gap for more space, matching Admin Dashboard */
+}
+
+.header h1 {
+    color: #2e7d32;
+    font-size: 1.8rem; /* Larger font size for consistency with Admin Dashboard */
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-container .fas.fa-search {
+    position: absolute;
+    top: 50%;
+    left: 0.7rem;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.search-input {
+    width: 200px; /* Exact width from image */
+    padding: 0.7rem 2rem 0.7rem 1.5rem; /* Adjusted for search icon and consistency */
+    border: 1px solid #ddd;
+    border-radius: 4px; /* Smaller radius for exact match */
+    font-size: 0.9rem; /* Adjusted for exact font size */
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+}
+.filter-dropdown {
+    padding: 0.7rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 20px; /* Rounded right corners only */
+    background-color: #ffffff;
+    color: #333;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    height: 100%; /* Match height with search input */
+}
+
+.filter-dropdown:hover, .filter-dropdown:focus {
+    border-color: #4caf50;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 40px; /* Exact size from image */
+    height: 40px; /* Exact size from image */
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Billings Transactions Section Styles */
+.billings-transactions-section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.summary-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.summary-card h3 {
+    color: #4caf50;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.summary-card .amount {
+    color: #4caf50;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.summary-card .update {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.transactions-table th, .transactions-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 0.9rem;
+}
+
+.transactions-table th {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.transactions-table td {
+    color: #333;
+}
+
+.transactions-table .status {
+    font-weight: bold;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.transactions-table .status.paid {
+    color: #4caf50; /* Green text for "Paid" */
+}
+
+.transactions-table .status.pending {
+    color: #f57c00; /* Orange text for "Pending" */
+}
+
+.transactions-table .status.overdue {
+    color: #d32f2f; /* Red text for "Overdue" */
+}
+
+.transactions-table i {
+    color: #4caf50;
+    cursor: pointer;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.pagination-btn {
+    background-color: #ffffff;
+    color: #4caf50;
+    padding: 0.4rem 1rem;
+    border: 1px solid #4caf50;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-btn:hover {
+    background-color: #e8f5e9;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">SmartCare</div>
+        <ul class="sidebar-links">
+            <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="patient.html"><i class="fas fa-users"></i> Patient</a></li>
+            <li><a href="doctors.html"><i class="fas fa-user-md"></i> Doctor</a></li>
+            <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+            <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+            <li><a href="billings.html" class="active"><i class="fas fa-file-invoice-dollar"></i> Billings</a></li>
+            <li><a href="chats.html"><i class="fas fa-comments"></i> Chats</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="header">
+            <h1>Billings</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search Here" class="search-input">
+                <i class="fas fa-search search-icon"></i>
+                <select class="filter-dropdown">
+                    <option value="all">All</option>
+                    <option value="paid">Paid</option>
+                    <option value="unpaid">Unpaid</option>
+                    <option value="overdue">Overdue</option>
+                </select>
+            </div>
+            <div class="user-profile">
+                <img src="https://images.unsplash.com/photo-1615177393114-bd2917a4f74a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODJ8fHBhdGllbnRzJTIwcHJvZmlsZSUyMHBpY3R1cmVzfGVufDB8fDB8fHww" alt="Dr. Prakesh Shamar" class="doctor-img-small">
+                <span>Dr. Prakesh Shamar, Admin</span>
+            </div>
+        </header>
+
+        <section class="billings-transactions-section">
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>Paid Transaction</h3>
+                    <p class="amount">$2,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Unpaid Transaction</h3>
+                    <p class="amount">$1,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Transaction Overdue</h3>
+                    <p class="amount">$5,000</p>
+                    <p class="update">Last update: 20th June</p>
+                </div>
+            </div>
+
+            <table class="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Payment</th>
+                        <th>Invoice</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status pending">Pending</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                    <tr>
+                        <td>#223445</td>
+                        <td>John Doe</td>
+                        <td>20/08/2025</td>
+                        <td class="status paid">Paid</td>
+                        <td>$500</td>
+                        <td><i class="fas fa-download"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <button class="pagination-btn">Prev</button>
+                <span>1 2 … 6 7</span>
+                <button class="pagination-btn">Next</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

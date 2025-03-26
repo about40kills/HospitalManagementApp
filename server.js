@@ -47,10 +47,6 @@ app.get("/signup", (req, res) => {
     return res.render("signUp");
 });
 
-app.get("/inventory", (req, res) => {
-    return res.render("inventory");
-});
-
 app.get("/api", (req, res) => {
     const User = sequelize.models.User;
     User.findAll().then(users => {
@@ -202,13 +198,31 @@ app.post("/", async (req, res) => {
 
 app.get("/admin-dashboard", (req, res) => {
     return res.render("admin-dashboard");
-}
-);
+});
 
 app.get("/patient-dashboard", (req, res) => {
     return res.render("patient-dashboard");
-}
-);
+});
+app.get("inventory", (req, res) => {
+    return res.render("inventory");
+});
+
+app.get("/chats", (req, res) => {
+    return res.render("chats");
+});
+app.get("/book-appointment", (req, res) => {
+    return res.render("book-appointment");
+});
+app.get("/appointments", (req, res) => {
+    return res.render("appointments");
+});
+app.get("/billings", (req, res) => {
+    return res.render("billings");
+});
+app.get("/billing-transactions", (req, res) => {
+    return res.render("billing-transactions");
+});
+
 
 
 app.use(`/api/users`,require('./src/routes/userRoutes'));
